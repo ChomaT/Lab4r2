@@ -28,8 +28,7 @@ int main(int argc, char** argv) {
 
 
 	printf("\nSTART\n");
-        printf("ARGC == %d", argc);
-
+        
 	//OPENING FILE
 	for(i = 0; i < argc; i++)
 	{
@@ -39,49 +38,48 @@ int main(int argc, char** argv) {
                         printf("\nBEGIN FILE OPENING");
                         fflush(stdout);
                         numfile = atoi(argv[i+1]);
-                            printf("\n numfile is %d", numfile);
-                            fflush(stdout);
+                        if(numfile < 15 && numfile > 0){
                                 if(numfile > 9)
                                 {
-                                    printf("\nFILE > 10");
-                                    fflush(stdout);
                                     sprintf(str, "Raw_data_%d.txt", numfile);
                                 }
-				else
+                                else
                                 {
-                                    printf("\nFILE < 10");
-                                    fflush(stdout);
                                     sprintf(str, "Raw_data_0%d.txt", numfile);
                                 }
-                        printf("\nFILE NAME: %s", str);
-                        fflush(stdout);
-			fp = fopen(str, "r");
-			if(fp == NULL)
-			{
-				perror("\n!!!Error opening file!!!\n");
-                                return 0;
-			}
-                        else
-                        {
-                                printf("\nFile opened successfully\n");
-                        }
+                            printf("\nFILE NAME: %s", str);
+                            fflush(stdout);
+                            fp = fopen(str, "r");
+                            if(fp == NULL)
+                            {
+                                    perror("\n!!!Error opening file!!!\n");
+                                    return 0;
+                            }
+                            else
+                            {
+                                    printf("\nFile opened successfully\n");
+                            }
 
-                        //data parsing
-                        printf("\nBEGIN DATA PARSING");
-                        fflush(stdout);
-			fscanf(fp, "%d", &numdata);
-                        printf("\nnumdata = %d", numdata);
-			fflush(stdout);
-                        fscanf(fp, "%d", &maxdata);
-                        printf("\nmaxdata = %d", maxdata);
-			fflush(stdout);
-                        for(i = 0; i < numdata; i++)
-			{
-				fscanf(fp, "%d", &array[i]);
-			}
-                        printf("\nCLOSE POINTER\n");
-                        fflush(stdout);
-			fclose(fp);
+                            //data parsing
+                            printf("\nBEGIN DATA PARSING");
+                            fflush(stdout);
+                            fscanf(fp, "%d", &numdata);
+                            printf("\nnumdata = %d", numdata);
+                            fflush(stdout);
+                            fscanf(fp, "%d", &maxdata);
+                            printf("\nmaxdata = %d", maxdata);
+                            fflush(stdout);
+                            for(i = 0; i < numdata; i++)
+                            {
+                                    fscanf(fp, "%d", &array[i]);
+                            }
+                            printf("\nCLOSE POINTER\n");
+                            fflush(stdout);
+                            fclose(fp);
+                        }
+                        else{
+                            printf("File Opening Error\n");
+                        }
 		}
 	}
 
@@ -92,8 +90,6 @@ int main(int argc, char** argv) {
 	{
 		if(argv[i][1] == 'o')
 		{
-                    printf("\nOFFSET CASE");
-                    fflush(stdout);
                     factor = (double)atoi(argv[i+1]);
                     offset(numdata, array, factor, numfile);
 		}
